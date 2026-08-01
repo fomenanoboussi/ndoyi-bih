@@ -1,0 +1,6 @@
+{
+  "name": "Lettre d'Amour Interactive",
+  "description": "Une enveloppe romantique et interactive avec lettre personnalisée, cassette musicale, photos polaroid et surprise pour sa copine.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
