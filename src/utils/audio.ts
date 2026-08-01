@@ -122,20 +122,31 @@ class SoundManager {
     this.initCtx();
     this.stopMusic();
 
-    const targetUrl = (url && url.length > 2) ? url : '/perfect.mp3';
+    const ONLINE_FALLBACK = 'https://archive.org/download/perfect-ed-sheeran-lyrics_202202/Perfect%20-%20Ed%20Sheeran%20%28Lyrics%29.mp3';
+    const primaryUrl = (url && url.length > 2) ? url : '/perfect.mp3';
 
     try {
-      const audio = new Audio(targetUrl);
+      const audio = new Audio(primaryUrl);
       audio.loop = true;
       audio.volume = 0.7;
       this.externalAudio = audio;
       this.isMusicPlaying = true;
 
+      // Handle loading errors (e.g. if /perfect.mp3 is missing on Vercel deployment)
+      audio.onerror = () => {
+        if (this.externalAudio && primaryUrl !== ONLINE_FALLBACK) {
+          console.warn("Primary audio failed to load. Switching to online fallback URL...");
+          this.externalAudio.src = ONLINE_FALLBACK;
+          this.externalAudio.load();
+          this.externalAudio.play().catch((e) => console.warn("Fallback play error:", e));
+        }
+      };
+
       const playPromise = audio.play();
       if (playPromise !== undefined) {
         playPromise.catch((err) => {
-          console.warn("Autoplay / Audio play restriction:", err);
-          // Retry playing on next user touch or click if blocked by browser policy
+          console.warn("Autoplay restriction detected. Waiting for user interaction...", err);
+          // Retry playing on user touch or click if blocked by browser policy
           const resumeAudio = () => {
             if (this.externalAudio && this.isMusicPlaying) {
               this.externalAudio.play().catch(() => {});
