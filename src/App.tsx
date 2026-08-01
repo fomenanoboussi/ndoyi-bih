@@ -17,6 +17,15 @@ export default function App() {
   const [activeView, setActiveView] = useState<ActiveView>('closed');
   const [isCustomizerOpen, setIsCustomizerOpen] = useState<boolean>(false);
 
+  // Clear any old stored localStorage cache on initial load
+  useEffect(() => {
+    try {
+      localStorage.removeItem('user_romantic_card_data');
+    } catch (e) {
+      console.error(e);
+    }
+  }, []);
+
   // Sync cardData to localStorage and server
   const handleUpdateCardData = (updated: CardData) => {
     setCardData(updated);

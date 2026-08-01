@@ -23,6 +23,12 @@ export const CustomizerDrawer: React.FC<CustomizerDrawerProps> = ({
   const [aiMemories, setAiMemories] = useState<string>('');
   const [saveSuccess, setSaveSuccess] = useState<boolean>(false);
 
+  React.useEffect(() => {
+    if (isOpen) {
+      setLocalData(cardData);
+    }
+  }, [isOpen, cardData]);
+
   const handleSave = async () => {
     onUpdateCardData(localData);
     setSaveSuccess(true);
