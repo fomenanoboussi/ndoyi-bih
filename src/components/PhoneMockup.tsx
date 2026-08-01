@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Smartphone, Monitor, Sparkles, SlidersHorizontal, Share2, Check } from 'lucide-react';
+import { Smartphone, Monitor, Share2, Check } from 'lucide-react';
 
 interface PhoneMockupProps {
   children: React.ReactNode;
-  onOpenCustomizer: () => void;
+  onOpenCustomizer?: () => void;
   siteUrl?: string;
   recipientName: string;
 }
@@ -63,17 +63,6 @@ export const PhoneMockup: React.FC<PhoneMockupProps> = ({
               <span>Plein Écran</span>
             </button>
           </div>
-
-          {/* Customize Button */}
-          <button
-            onClick={onOpenCustomizer}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-[#e8a3a3] to-[#d9777f] text-[#2c221e] font-semibold hover:brightness-110 transition shadow-md text-xs sm:text-sm"
-            title="Personnaliser et enregistrer pour le site"
-          >
-            <SlidersHorizontal className="w-3.5 h-3.5" />
-            <span>Personnaliser</span>
-            <Sparkles className="w-3 h-3 text-[#7d1c24] animate-pulse" />
-          </button>
         </div>
       </header>
 
