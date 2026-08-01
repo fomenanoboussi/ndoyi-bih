@@ -64,24 +64,13 @@ export const PhoneMockup: React.FC<PhoneMockupProps> = ({
             </button>
           </div>
 
-          {/* Share Button */}
-          <button
-            onClick={handleCopyLink}
-            className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-[#483730] hover:bg-[#5a463d] text-[#f6ece2] transition text-xs font-medium border border-[#6b5247]"
-            title="Copier le lien"
-          >
-            {copied ? <Check className="w-3.5 h-3.5 text-green-400" /> : <Share2 className="w-3.5 h-3.5" />}
-            <span className="hidden sm:inline">{copied ? 'Copié !' : 'Partager'}</span>
-          </button>
-
-          {/* Edit / Customize Drawer Trigger */}
+          {/* Subtle edit icon for creator if needed */}
           <button
             onClick={onOpenCustomizer}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-[#d9777f] to-[#e8a3a3] text-[#211714] font-semibold hover:brightness-110 transition shadow-md text-xs sm:text-sm"
+            className="p-1.5 rounded-xl text-[#7a6457] hover:text-[#f6ece2] hover:bg-[#483730] transition text-xs opacity-30 hover:opacity-100"
+            title="Modifier"
           >
             <SlidersHorizontal className="w-3.5 h-3.5" />
-            <span>Personnaliser</span>
-            <Sparkles className="w-3 h-3 text-[#7d1c24] animate-pulse" />
           </button>
         </div>
       </header>
