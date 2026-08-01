@@ -1,20 +1,20 @@
 import { CardData } from '../types';
 
 export const defaultCardData: CardData = {
-  recipientName: 'Alice',
+  recipientName: 'Ma Chérie',
   senderName: 'Mon Amour',
-  title: 'You got a mail!',
-  salutation: 'Dear Alice,',
-  letterContent: `Happy birthday! Wishing you a day filled with love, laughter and beautiful little moments that make your heart happy.
+  title: 'Tu as un message !',
+  salutation: 'Ma tendre chérie,',
+  letterContent: `Mon amour, je voulais te dire à quel point tu es précieuse pour moi. Chaque moment passé à tes côtés illumine mes journées.
 
-You bring so much joy, genuine smiles and good things into my life. Thank you for being you, for every sweet memory we share, and for shining so brightly in my world.
+Tu apportes tellement de joie, de douceur et de bonheur dans ma vie. Merci d'être la personne extraordinaire que tu es, pour tous nos beaux souvenirs et pour tout l'amour que nous partageons.
 
-I love you more than words can express. ❤️`,
+Je t'aime plus que les mots ne peuvent l'exprimer. ❤️`,
   songTitle: 'L-O-V-E',
   artistName: 'Nat King Cole',
   audioUrl: 'https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-acoustic-love-song-114510.mp3',
-  surpriseMessage: 'Surprise ! 🎁',
-  surpriseSubtext: 'I got you a special gift... Look behind you! I love you so much!',
+  surpriseMessage: 'Une surprise pour toi ! 🎁',
+  surpriseSubtext: 'J\'ai un petit cadeau spécial pour toi... Regarde derrière toi ! Je t\'aime fort !',
   themeColor: 'brown',
   polaroids: [
     {
