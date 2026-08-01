@@ -514,7 +514,7 @@ export const CustomizerDrawer: React.FC<CustomizerDrawerProps> = ({
                 className="px-6 py-2.5 bg-[#543528] hover:bg-[#684334] text-[#f4ebe1] font-bold text-xs rounded-xl shadow-lg transition flex items-center gap-1.5"
               >
                 {saveSuccess ? <Check className="w-4 h-4 text-green-400" /> : <Heart className="w-4 h-4 text-[#e8a3a3]" />}
-                <span>{saveSuccess ? 'Enregistré !' : 'Appliquer les modifications'}</span>
+                <span>{saveSuccess ? 'Enregistré dans le projet !' : 'Enregistrer dans le projet'}</span>
               </button>
             </div>
           </motion.div>
