@@ -23,13 +23,25 @@ export const CustomizerDrawer: React.FC<CustomizerDrawerProps> = ({
   const [aiMemories, setAiMemories] = useState<string>('');
   const [saveSuccess, setSaveSuccess] = useState<boolean>(false);
 
-  const handleSave = () => {
+  const handleSave = async () => {
     onUpdateCardData(localData);
     setSaveSuccess(true);
+    
+    // Explicitly push to server API so src/data/defaultCard.ts is updated on disk
+    try {
+      await fetch('/api/save-default-card', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(localData),
+      });
+    } catch (e) {
+      console.error('Error saving default card to disk:', e);
+    }
+
     setTimeout(() => {
       setSaveSuccess(false);
       onClose();
-    }, 800);
+    }, 1000);
   };
 
   // AI Love Letter Generation via Server API

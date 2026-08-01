@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AnimatePresence } from 'motion/react';
 import { CardData, ActiveView } from './types';
 import { defaultCardData } from './data/defaultCard';
@@ -26,6 +26,17 @@ export default function App() {
 
   const [activeView, setActiveView] = useState<ActiveView>('closed');
   const [isCustomizerOpen, setIsCustomizerOpen] = useState<boolean>(false);
+
+  // Sync cardData to the backend server file (src/data/defaultCard.ts)
+  // so that when deploying to Vercel or opening on a fresh device,
+  // the exact user customization is preserved as the default.
+  useEffect(() => {
+    fetch('/api/save-default-card', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(cardData),
+    }).catch((err) => console.log('Syncing default card to server:', err));
+  }, [cardData]);
 
   const handleUpdateCardData = (updated: CardData) => {
     setCardData(updated);

@@ -1,5 +1,6 @@
 import express from 'express';
 import path from 'path';
+import fs from 'fs';
 import { createServer as createViteServer } from 'vite';
 import { GoogleGenAI } from '@google/genai';
 
@@ -7,7 +8,27 @@ async function startServer() {
   const app = express();
   const PORT = 3000;
 
-  app.use(express.json({ limit: '10mb' }));
+  app.use(express.json({ limit: '25mb' }));
+
+  // API Endpoint to save user customization directly into src/data/defaultCard.ts for Vercel/production deployment
+  app.post('/api/save-default-card', (req, res) => {
+    try {
+      const cardData = req.body;
+      if (!cardData || typeof cardData !== 'object') {
+        return res.status(400).json({ success: false, error: 'Données de carte invalides' });
+      }
+
+      const filePath = path.join(process.cwd(), 'src', 'data', 'defaultCard.ts');
+      const fileContent = `import { CardData } from '../types';\n\nexport const defaultCardData: CardData = ${JSON.stringify(cardData, null, 2)};\n`;
+
+      fs.writeFileSync(filePath, fileContent, 'utf-8');
+      console.log('Saved custom card data to src/data/defaultCard.ts');
+      return res.json({ success: true });
+    } catch (err) {
+      console.error('Failed to save default card data:', err);
+      return res.status(500).json({ success: false, error: 'Erreur lors de la sauvegarde sur disque' });
+    }
+  });
 
   // Initialize Gemini AI SDK (Server-Side Only)
   const ai = new GoogleGenAI({
