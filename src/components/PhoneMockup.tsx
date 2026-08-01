@@ -91,21 +91,6 @@ export const PhoneMockup: React.FC<PhoneMockupProps> = ({
             <div className="relative flex-1 w-full bg-[#f4ebe1] rounded-[36px] overflow-hidden flex flex-col shadow-inner">
               {children}
             </div>
-
-            {/* Mobile Safari Style URL Bar at Bottom (Matches TikTok video mockup) */}
-            <div className="w-full pt-2 pb-1 px-3 bg-[#e8ded0] border-t border-[#d8cbbd] flex items-center justify-between rounded-b-[36px] z-40 text-[#5a483c] text-xs">
-              <div className="text-[11px] font-serif font-bold opacity-70">aA</div>
-              <div className="flex-1 mx-2 py-1 px-3 bg-[#f7f2eb] rounded-xl flex items-center justify-center gap-1.5 border border-[#d8cbbd] shadow-2xs">
-                <span className="text-[10px] text-neutral-400">🔒</span>
-                <span className="text-[11px] font-medium tracking-tight truncate max-w-[200px]">
-                  {siteUrl}
-                </span>
-                <span className="text-[10px] text-neutral-400">↻</span>
-              </div>
-              <div className="flex items-center gap-2 text-sm opacity-70">
-                <span>📖</span>
-              </div>
-            </div>
           </div>
         ) : (
           /* Fullscreen Desktop View Container */

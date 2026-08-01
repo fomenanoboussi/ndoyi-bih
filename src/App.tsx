@@ -40,7 +40,6 @@ export default function App() {
     <PhoneMockup
       recipientName={cardData.recipientName}
       onOpenCustomizer={() => setIsCustomizerOpen(true)}
-      siteUrl="racedigitals.my.canva.site"
     >
       <div className="w-full h-full relative overflow-hidden">
         <AnimatePresence mode="wait">

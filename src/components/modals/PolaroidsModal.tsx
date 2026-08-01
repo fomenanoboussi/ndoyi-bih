@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { CardData, PolaroidMemory } from '../../types';
 import { soundFx } from '../../utils/audio';
@@ -10,6 +10,11 @@ interface PolaroidsModalProps {
 
 export const PolaroidsModal: React.FC<PolaroidsModalProps> = ({ cardData, onBack }) => {
   const [selectedPhoto, setSelectedPhoto] = useState<PolaroidMemory | null>(null);
+
+  useEffect(() => {
+    // Automatically start playing Ed Sheeran - Perfect when viewing photos
+    soundFx.startMusic(cardData.audioUrl || '/perfect.mp3');
+  }, [cardData.audioUrl]);
 
   const handleBack = () => {
     soundFx.playClick();
@@ -27,6 +32,12 @@ export const PolaroidsModal: React.FC<PolaroidsModalProps> = ({ cardData, onBack
       <div className="absolute inset-0 opacity-15 bg-[repeating-linear-gradient(45deg,#b89e83,#b89e83_10px,transparent_10px,transparent_20px)] pointer-events-none" />
 
       <div className="w-full max-w-[340px] my-auto relative z-10 flex flex-col items-center py-4">
+        {/* Music Playing Indicator Badge */}
+        <div className="flex items-center gap-2 bg-[#e8ded0]/90 px-3 py-1 rounded-full text-xs text-[#59382b] font-serif font-medium border border-[#d8c5b0] shadow-sm mb-3">
+          <span className="animate-bounce">🎵</span>
+          <span>Ed Sheeran — Perfect</span>
+        </div>
+
         {/* Header */}
         <div className="text-center mb-4">
           <div className="text-xl">📸</div>

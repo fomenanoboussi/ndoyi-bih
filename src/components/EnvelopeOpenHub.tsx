@@ -18,6 +18,9 @@ export const EnvelopeOpenHub: React.FC<EnvelopeOpenHubProps> = ({
 }) => {
   const handleItemClick = (view: ActiveView) => {
     soundFx.playClick();
+    if (view === 'polaroids' || view === 'cassette') {
+      soundFx.startMusic(cardData.audioUrl);
+    }
     onSelectView(view);
   };
 

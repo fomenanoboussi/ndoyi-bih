@@ -122,69 +122,33 @@ class SoundManager {
     this.initCtx();
     this.stopMusic();
 
-    if (url && url.length > 5) {
-      try {
-        this.externalAudio = new Audio(url);
-        this.externalAudio.loop = true;
-        this.externalAudio.volume = 0.6;
-        this.externalAudio.play().catch(() => {
-          // Fallback to synthesized melody if external audio fails/CORS blocked
-          this.startSynthesizedMelody();
-        });
-        this.isMusicPlaying = true;
-        return;
-      } catch {
-        this.startSynthesizedMelody();
-        return;
-      }
-    }
-
-    this.startSynthesizedMelody();
-  }
-
-  private startSynthesizedMelody() {
-    if (!this.ctx) return;
+    const targetUrl = (url && url.length > 2) ? url : '/perfect.mp3';
 
     try {
-      // Create a sweet romantic synthesized music loop (C major 7th arpeggios)
-      const notes = [261.63, 329.63, 392.00, 493.88, 523.25, 493.88, 392.00, 329.63]; // C E G B C B G E
-      const tempo = 0.4; // seconds per note
-
-      this.musicGainNode = this.ctx.createGain();
-      this.musicGainNode.gain.setValueAtTime(0.15, this.ctx.currentTime);
-      this.musicGainNode.connect(this.ctx.destination);
-
-      let noteIndex = 0;
-
-      const playNextNote = () => {
-        if (!this.isMusicPlaying || !this.ctx || !this.musicGainNode) return;
-
-        const osc = this.ctx.createOscillator();
-        const noteGain = this.ctx.createGain();
-
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(notes[noteIndex], this.ctx.currentTime);
-
-        noteGain.gain.setValueAtTime(0.12, this.ctx.currentTime);
-        noteGain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + tempo * 0.9);
-
-        osc.connect(noteGain);
-        noteGain.connect(this.musicGainNode);
-
-        osc.start();
-        osc.stop(this.ctx.currentTime + tempo * 0.95);
-
-        noteIndex = (noteIndex + 1) % notes.length;
-
-        if (this.isMusicPlaying) {
-          setTimeout(playNextNote, tempo * 1000);
-        }
-      };
-
+      const audio = new Audio(targetUrl);
+      audio.loop = true;
+      audio.volume = 0.7;
+      this.externalAudio = audio;
       this.isMusicPlaying = true;
-      playNextNote();
-    } catch {
-      // Audio fallback
+
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise.catch((err) => {
+          console.warn("Autoplay / Audio play restriction:", err);
+          // Retry playing on next user touch or click if blocked by browser policy
+          const resumeAudio = () => {
+            if (this.externalAudio && this.isMusicPlaying) {
+              this.externalAudio.play().catch(() => {});
+            }
+            window.removeEventListener('click', resumeAudio);
+            window.removeEventListener('touchstart', resumeAudio);
+          };
+          window.addEventListener('click', resumeAudio, { once: true });
+          window.addEventListener('touchstart', resumeAudio, { once: true });
+        });
+      }
+    } catch (err) {
+      console.error("Audio initialization error:", err);
     }
   }
 
